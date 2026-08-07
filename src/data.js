@@ -12,7 +12,7 @@ export const TURNO_INFO = {
 export const SESION_INFO = {
   gymA:       { label: 'Gym Pesado A', color: '#22c55e', icon: 'dumbbell', tipo: 'Piernas + tracción' },
   gymB:       { label: 'Gym Pesado B', color: '#22c55e', icon: 'dumbbell', tipo: 'Empuje + tracción' },
-  calistenia: { label: 'Calistenia casa', color: '#a855f7', icon: 'home', tipo: '20-30 min' },
+  calistenia: { label: 'Calistenia', color: '#a855f7', icon: 'home', tipo: 'Full body 30-40 min' },
   natacion:   { label: 'Natación', color: '#06b6d4', icon: 'waves', tipo: 'AM antes del turno' },
   running:    { label: 'Running Z2', color: '#06b6d4', icon: 'run', tipo: '30-45 min' },
   descanso:   { label: 'Descanso', color: '#64748b', icon: 'moon', tipo: 'Dormir' },
@@ -93,15 +93,17 @@ export const SESIONES = {
     ]
   },
   calistenia: {
-    nombre: 'Calistenia en casa', subtitulo: '20-30 min · barra + fondos', color: '#a855f7', duracion: '20-30 min',
-    chequeo: 'Sesión comodín. Bajo coste de fatiga. Persigue progreso solo en dominadas y fondos lastrados.',
+    nombre: 'Calistenia Full Body', subtitulo: 'FASE 1 · Fundamentos', color: '#a855f7', duracion: '30-40 min',
+    chequeo: 'FASE 1 (Fundamentos): construyes tu base con banda de asistencia. Meta de esta fase: 8+ dominadas, 15+ flexiones, 8+ fondos limpios sin banda. NO uses lastre todavía. Prioriza técnica perfecta sobre cantidad.',
     ejercicios: [
-      { id: 'cal-1', nombre: 'Calentamiento', series: 1, reps: '3-4 min', rir: '—', descanso: '—', nota: 'Hombro, escápulas, muñeca, dead hang.' },
-      { id: 'cal-2', nombre: 'Dominadas', series: 4, reps: '4-6', rir: '1-2', descanso: '90s', nota: 'Lastradas con mochila si puedes.', lastre: true },
-      { id: 'cal-3', nombre: 'Fondos paralelas', series: 4, reps: '6-8', rir: '1-2', descanso: '90s', nota: 'Superserie con dominadas.', lastre: true },
-      { id: 'cal-4', nombre: 'Front lever TUCK (isometría)', series: 3, reps: '10-15s', rir: '—', descanso: '60s', nota: 'Solo mantenimiento.' },
-      { id: 'cal-5', nombre: 'Pike push-up / pino a pared', series: 3, reps: '6-8', rir: '1-2', descanso: '60s', nota: 'Fuerza de hombro.' },
-      { id: 'cal-6', nombre: 'Core anti-extensión', series: 3, reps: '8-12', rir: '1', descanso: '45s', nota: 'En soporte de abdominales.' },
+      { id: 'cal-1', nombre: 'Calentamiento articular', series: 1, reps: '4-5 min', rir: '—', descanso: '—', nota: 'Círculos de hombro, muñeca, cadera, rodilla. Dead hang 20s. Band pull-apart 15 reps.' },
+      { id: 'cal-2', nombre: 'Dominadas ASISTIDAS con banda', series: 4, reps: '5-8', rir: '1-2', descanso: '2 min', nota: 'Banda larga colgada de la barra, pie/rodilla dentro. Baja de asistencia cuando logres 8 limpias.', banda: true },
+      { id: 'cal-3', nombre: 'Sentadilla peso corporal', series: 3, reps: '15-20', rir: '2', descanso: '75s', nota: 'Profundas, control. Cuando pases 20 fáciles, avanza a búlgara o sentadilla lenta.' },
+      { id: 'cal-4', nombre: 'Fondos ASISTIDOS o en banco', series: 4, reps: '6-8', rir: '1-2', descanso: '2 min', nota: 'Banda en paralelas, o fondos en banco/silla si aún cuesta. Progresa a fondos completos.', banda: true },
+      { id: 'cal-5', nombre: 'Flexiones', series: 3, reps: '8-12', rir: '1-2', descanso: '75s', nota: 'Si 12 es fácil, prueba flexión diamante o declinada. Si cuesta, apoya rodillas.' },
+      { id: 'cal-6', nombre: 'Zancadas (lunges)', series: 3, reps: '10/pierna', rir: '2', descanso: '60s', nota: 'Base para el pistol squat. Control en la bajada.' },
+      { id: 'cal-7', nombre: 'Remo con banda tubo', series: 3, reps: '12-15', rir: '1', descanso: '60s', nota: 'Banda tubo anclada. Tracción horizontal, equilibra las dominadas.' },
+      { id: 'cal-8', nombre: 'Plancha (core)', series: 3, reps: '30-45s', rir: '1', descanso: '45s', nota: 'Cuerpo recto, glúteo y abdomen apretados. Base para L-sit y front lever.' },
     ]
   },
   natacion: {
