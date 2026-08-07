@@ -54,7 +54,11 @@ export const CALENDARIO_DEFAULT = [
   { dia: 31, sem: 'Lun', turno: 'N', sesion: 'running' },
 ];
 
-export const MES_INFO = { nombre: 'Agosto', anio: 2026, mesIdx: 7 };
+export const MES_INFO = { nombre: 'Agosto', anio: 2026, mesIdx: 7, primerDiaSemana: 6 };
+// primerDiaSemana: 0=Dom, 1=Lun, ... 6=Sab. Agosto 2026 empieza en sábado (6).
+// Para meses futuros, cambia este número según en qué columna cae el día 1.
+
+export const DIAS_SEMANA = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
 
 // ═══════════════ SESIONES DE ENTRENAMIENTO ═══════════════
 // tipo especial: los ejercicios con "lastre:true" muestran input de peso de mochila
