@@ -97,7 +97,7 @@ const RestTimer = ({ timer, onSkip, color }) => {
 };
 
 // ═══════════════ EXERCISE CARD ═══════════════
-const ExerciseCard = ({ ex, prog, pr, onToggleSet, onLog, onLastre, color }) => {
+const ExerciseCard = ({ ex, prog, pr, onToggleSet, onLog, onLastre, onBanda, color }) => {
   const setCount = typeof ex.series === 'number' ? ex.series : 1;
   const p = prog || { sets: [], logs: [], lastre: null };
   const allDone = setCount > 0 && p.sets?.length === setCount && p.sets.every(Boolean);
@@ -140,6 +140,21 @@ const ExerciseCard = ({ ex, prog, pr, onToggleSet, onLog, onLastre, color }) => 
           </div>
         )}
 
+        {/* Banda de asistencia */}
+        {ex.banda && (
+          <div className="flex items-center gap-2 mb-2 px-2 py-1.5 rounded bg-purple-950/20 border border-purple-900/40">
+            <Zap size={14} className="text-purple-400 flex-shrink-0" />
+            <span className="text-[10px] uppercase tracking-wide text-purple-300/80 font-semibold">Banda</span>
+            <input
+              type="text"
+              value={p.banda ?? ''}
+              onChange={(e) => onBanda(ex.id, e.target.value)}
+              placeholder="color/nivel"
+              className="flex-1 min-w-0 h-8 px-2 bg-[#0f1417] border border-[#3a2a50] focus:border-purple-500/60 focus:outline-none text-slate-100 text-xs rounded"
+            />
+          </div>
+        )}
+
         {/* Checklist de series */}
         {setCount > 0 && (
           <div className="flex items-start gap-1.5 flex-wrap pt-2 border-t border-[#232c34]">
@@ -170,7 +185,7 @@ const ExerciseCard = ({ ex, prog, pr, onToggleSet, onLog, onLastre, color }) => 
 };
 
 // ═══════════════ SESSION VIEW ═══════════════
-const SessionView = ({ diaData, sesionKey, progress, prMap, onBack, onToggleSet, onLog, onLastre, onReset, restTimer, onSkipTimer }) => {
+const SessionView = ({ diaData, sesionKey, progress, prMap, onBack, onToggleSet, onLog, onLastre, onBanda, onReset, restTimer, onSkipTimer }) => {
   const ses = SESIONES[sesionKey];
   const color = ses.color;
   const dayProg = progress || {};
@@ -252,7 +267,7 @@ const SessionView = ({ diaData, sesionKey, progress, prMap, onBack, onToggleSet,
           <div className="space-y-2.5">
             {ses.ejercicios.map(ex => (
               <ExerciseCard key={ex.id} ex={ex} prog={dayProg[ex.id]} pr={prMap[ex.id]}
-                onToggleSet={onToggleSet} onLog={onLog} onLastre={onLastre} color={color} />
+                onToggleSet={onToggleSet} onLog={onLog} onLastre={onLastre} onBanda={onBanda} color={color} />
             ))}
           </div>
         )}
@@ -598,6 +613,14 @@ export default function App() {
     if (kg != null) checkPR(exId, kg);
   }, [activeDia, checkPR]);
 
+  const onBanda = useCallback((exId, val) => {
+    setProgress(prev => {
+      const day = prev[activeDia] || {};
+      const p = day[exId] || { sets: [], logs: [], lastre: null };
+      return { ...prev, [activeDia]: { ...day, [exId]: { ...p, banda: val } } };
+    });
+  }, [activeDia]);
+
   const resetDay = useCallback(() => {
     setProgress(prev => { const n = { ...prev }; delete n[activeDia]; return n; });
   }, [activeDia]);
@@ -620,7 +643,7 @@ export default function App() {
         <SessionView
           diaData={activeDiaData} sesionKey={activeDiaData.sesion}
           progress={progress[activeDia]} prMap={prMap}
-          onBack={backToCalendar} onToggleSet={toggleSet} onLog={onLog} onLastre={onLastre}
+          onBack={backToCalendar} onToggleSet={toggleSet} onLog={onLog} onLastre={onLastre} onBanda={onBanda}
           onReset={resetDay} restTimer={restTimer} onSkipTimer={skipTimer}
         />
       </>
