@@ -4,7 +4,7 @@ import {
   Timer, Trophy, RotateCcw, ChevronLeft, ChevronRight, X, Backpack,
   Settings, ArrowLeft, Zap, Activity, Circle, Star, AlertTriangle
 } from 'lucide-react';
-import { TURNO_INFO, SESION_INFO, SESIONES, CALENDARIO_DEFAULT, MES_INFO } from './data.js';
+import { TURNO_INFO, SESION_INFO, SESIONES, CALENDARIO_DEFAULT, MES_INFO, DIAS_SEMANA } from './data.js';
 
 // ═══════════════ HELPERS ═══════════════
 const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
@@ -374,9 +374,9 @@ const CalendarView = ({ calendario, progress, onOpenDay, onEditDay, editMode, se
         )}
       </header>
 
-      <main className="px-3 py-4 max-w-2xl mx-auto pb-24">
-        {/* Leyenda */}
-        <div className="flex items-center gap-3 justify-center mb-4 flex-wrap">
+      <main className="px-2 py-4 max-w-2xl mx-auto pb-24">
+        {/* Leyenda de turnos */}
+        <div className="flex items-center gap-3 justify-center mb-4 flex-wrap px-2">
           {Object.entries(TURNO_INFO).map(([k, v]) => (
             <div key={k} className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full" style={{ background: v.color }} />
@@ -385,8 +385,23 @@ const CalendarView = ({ calendario, progress, onOpenDay, onEditDay, editMode, se
           ))}
         </div>
 
-        {/* Grid de dias */}
-        <div className="space-y-2">
+        {/* Cabecera de días de la semana */}
+        <div className="grid grid-cols-7 gap-1 mb-1 px-1">
+          {DIAS_SEMANA.map((d, i) => (
+            <div key={i} className="text-center text-[9px] sm:text-[10px] font-bold uppercase tracking-wide text-slate-500 py-1">
+              {d}
+            </div>
+          ))}
+        </div>
+
+        {/* Cuadrícula del calendario */}
+        <div className="grid grid-cols-7 gap-1 px-1">
+          {/* Celdas vacías antes del día 1 */}
+          {Array.from({ length: MES_INFO.primerDiaSemana }).map((_, i) => (
+            <div key={`empty-${i}`} className="aspect-square" />
+          ))}
+
+          {/* Días del mes */}
           {calendario.map(d => {
             const turno = TURNO_INFO[d.turno];
             const ses = SESION_INFO[d.sesion];
@@ -395,42 +410,50 @@ const CalendarView = ({ calendario, progress, onOpenDay, onEditDay, editMode, se
             return (
               <button key={d.dia}
                 onClick={() => editMode ? onEditDay(d) : onOpenDay(d)}
-                className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-all text-left ${isToday ? 'border-slate-400 bg-[#1a222a]' : 'border-[#232c34] bg-[#151b21]'}`}>
-                {/* Fecha */}
-                <div className="flex flex-col items-center justify-center w-11 flex-shrink-0">
-                  <div className="text-[9px] uppercase text-slate-500 font-bold">{d.sem}</div>
-                  <div className="text-xl font-bold leading-none" style={{ fontFamily: 'ui-monospace, monospace', color: isToday ? '#e2e8f0' : '#94a3b8' }}>{d.dia}</div>
+                className={`relative aspect-square rounded-lg border p-1 flex flex-col transition-all ${
+                  isToday ? 'border-slate-300 bg-[#1a222a] ring-1 ring-slate-400/50' : 'border-[#232c34] bg-[#151b21] active:bg-[#1a222a]'
+                }`}
+                style={{ borderTopColor: turno.color, borderTopWidth: '3px' }}>
+
+                {/* Número del día */}
+                <div className="flex items-start justify-between leading-none">
+                  <span className="text-sm sm:text-base font-bold" style={{ fontFamily: 'ui-monospace, monospace', color: isToday ? '#e2e8f0' : '#cbd5e1' }}>
+                    {d.dia}
+                  </span>
+                  {/* Indicador de estado (esquina) */}
+                  {!editMode && comp === 'full' && <CheckCircle2 size={12} className="text-emerald-400 flex-shrink-0" />}
+                  {!editMode && comp === 'partial' && <Circle size={11} className="text-amber-400 flex-shrink-0" fill="#f59e0b" fillOpacity={0.4} />}
+                  {editMode && <Settings size={11} className="text-slate-500 flex-shrink-0" />}
                 </div>
-                {/* Barra de turno */}
-                <div className="w-1 self-stretch rounded-full flex-shrink-0" style={{ background: turno.color }} />
-                {/* Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded" style={{ background: turno.color + '22', color: turno.color }}>{turno.label}</span>
-                    {isToday && <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-slate-200 text-slate-900">Hoy</span>}
-                    {d.festivo && <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 flex items-center gap-0.5"><Star size={8} fill="currentColor" />Festivo</span>}
-                  </div>
-                  <div className="flex items-center gap-1.5 mt-1">
-                    <IconFor name={ses.icon} size={13} color={ses.color} />
-                    <span className="text-sm font-bold text-slate-200 truncate">{ses.label}</span>
-                  </div>
+
+                {/* Ícono de sesión (centro) */}
+                <div className="flex-1 flex items-center justify-center">
+                  <IconFor name={ses.icon} size={18} color={ses.color} />
                 </div>
-                {/* Estado */}
-                <div className="flex-shrink-0">
-                  {editMode ? (
-                    <Settings size={16} className="text-slate-600" />
-                  ) : comp === 'full' ? (
-                    <CheckCircle2 size={20} className="text-emerald-400" />
-                  ) : comp === 'partial' ? (
-                    <Circle size={20} className="text-amber-400" fill="#f59e0b" fillOpacity={0.3} />
-                  ) : (
-                    <ChevronRight size={18} className="text-slate-600" />
-                  )}
+
+                {/* Etiqueta de sesión (abajo) */}
+                <div className="text-[7px] sm:text-[8px] font-bold uppercase tracking-tight text-center leading-none truncate" style={{ color: ses.color }}>
+                  {ses.label.split(' ')[0]}
                 </div>
+
+                {/* Marcadores de esquina: hoy y festivo */}
+                {isToday && (
+                  <span className="absolute -top-1 -right-1 text-[7px] font-bold uppercase px-1 py-0.5 rounded-full bg-slate-200 text-slate-900 leading-none">Hoy</span>
+                )}
+                {d.festivo && (
+                  <span className="absolute -top-1 -left-1 w-3.5 h-3.5 rounded-full bg-rose-500 flex items-center justify-center">
+                    <Star size={8} className="text-white" fill="currentColor" />
+                  </span>
+                )}
               </button>
             );
           })}
         </div>
+
+        {/* Nota inferior */}
+        <p className="text-center text-[10px] text-slate-600 mt-4 px-4">
+          Toca un día para ver o registrar tu entrenamiento{editMode ? '' : ''}
+        </p>
       </main>
     </div>
   );
