@@ -10,9 +10,11 @@ export const TURNO_INFO = {
 };
 
 export const SESION_INFO = {
-  gymA:       { label: 'Gym Pesado A', color: '#22c55e', icon: 'dumbbell', tipo: 'Piernas + tracción' },
-  gymB:       { label: 'Gym Pesado B', color: '#22c55e', icon: 'dumbbell', tipo: 'Empuje + tracción' },
-  calistenia: { label: 'Calistenia', color: '#a855f7', icon: 'home', tipo: 'Full body 30-40 min' },
+  gymA:       { label: 'Gym A', color: '#22c55e', icon: 'dumbbell', tipo: 'Empuje superior' },
+  gymB:       { label: 'Gym B', color: '#16a34a', icon: 'dumbbell', tipo: 'Tracción superior' },
+  gymC:       { label: 'Gym C', color: '#15803d', icon: 'dumbbell', tipo: 'Pierna completa' },
+  gymD:       { label: 'Gym D', color: '#4ade80', icon: 'dumbbell', tipo: 'Tren superior completo' },
+  calistenia: { label: 'Calistenia', color: '#a855f7', icon: 'home', tipo: 'Full body + relleno' },
   natacion:   { label: 'Natación', color: '#06b6d4', icon: 'waves', tipo: 'AM antes del turno' },
   running:    { label: 'Running Z2', color: '#06b6d4', icon: 'run', tipo: '30-45 min' },
   descanso:   { label: 'Descanso', color: '#64748b', icon: 'moon', tipo: 'Dormir' },
@@ -21,15 +23,15 @@ export const SESION_INFO = {
 
 // Calendario de agosto 2026 (editable por el usuario)
 export const CALENDARIO_DEFAULT = [
-  { dia: 1,  sem: 'Sáb', turno: 'L', sesion: 'gymA' },
+  { dia: 1,  sem: 'Sáb', turno: 'L', sesion: 'gymC' },
   { dia: 2,  sem: 'Dom', turno: 'C', sesion: 'calistenia' },
   { dia: 3,  sem: 'Lun', turno: 'N', sesion: 'running' },
   { dia: 4,  sem: 'Mar', turno: 'P', sesion: 'descanso' },
-  { dia: 5,  sem: 'Mié', turno: 'L', sesion: 'gymB' },
+  { dia: 5,  sem: 'Mié', turno: 'L', sesion: 'gymC' },
   { dia: 6,  sem: 'Jue', turno: 'C', sesion: 'calistenia' },
   { dia: 7,  sem: 'Vie', turno: 'N', sesion: 'running', festivo: true },
   { dia: 8,  sem: 'Sáb', turno: 'P', sesion: 'descanso' },
-  { dia: 9,  sem: 'Dom', turno: 'L', sesion: 'gymA' },
+  { dia: 9,  sem: 'Dom', turno: 'L', sesion: 'gymD' },
   { dia: 10, sem: 'Lun', turno: 'C', sesion: 'calistenia' },
   { dia: 11, sem: 'Mar', turno: 'N', sesion: 'natacion' },
   { dia: 12, sem: 'Mié', turno: 'P', sesion: 'descanso' },
@@ -37,19 +39,19 @@ export const CALENDARIO_DEFAULT = [
   { dia: 14, sem: 'Vie', turno: 'C', sesion: 'calistenia' },
   { dia: 15, sem: 'Sáb', turno: 'N', sesion: 'natacion' },
   { dia: 16, sem: 'Dom', turno: 'P', sesion: 'descanso' },
-  { dia: 17, sem: 'Lun', turno: 'L', sesion: 'gymB', festivo: true },
+  { dia: 17, sem: 'Lun', turno: 'L', sesion: 'gymC', festivo: true },
   { dia: 18, sem: 'Mar', turno: 'C', sesion: 'calistenia' },
   { dia: 19, sem: 'Mié', turno: 'N', sesion: 'running' },
   { dia: 20, sem: 'Jue', turno: 'P', sesion: 'descanso' },
-  { dia: 21, sem: 'Vie', turno: 'L', sesion: 'gymA' },
+  { dia: 21, sem: 'Vie', turno: 'L', sesion: 'gymD' },
   { dia: 22, sem: 'Sáb', turno: 'C', sesion: 'calistenia' },
   { dia: 23, sem: 'Dom', turno: 'N', sesion: 'running' },
   { dia: 24, sem: 'Lun', turno: 'P', sesion: 'descanso' },
-  { dia: 25, sem: 'Mar', turno: 'L', sesion: 'gymB' },
+  { dia: 25, sem: 'Mar', turno: 'L', sesion: 'gymC' },
   { dia: 26, sem: 'Mié', turno: 'C', sesion: 'calistenia' },
   { dia: 27, sem: 'Jue', turno: 'N', sesion: 'natacion' },
   { dia: 28, sem: 'Vie', turno: 'P', sesion: 'descanso' },
-  { dia: 29, sem: 'Sáb', turno: 'L', sesion: 'gymA' },
+  { dia: 29, sem: 'Sáb', turno: 'L', sesion: 'gymD' },
   { dia: 30, sem: 'Dom', turno: 'C', sesion: 'calistenia' },
   { dia: 31, sem: 'Lun', turno: 'N', sesion: 'running' },
 ];
@@ -65,31 +67,55 @@ export const DIAS_SEMANA = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
 
 export const SESIONES = {
   gymA: {
-    nombre: 'Gym Pesado A', subtitulo: 'Piernas + tracción', color: '#22c55e', duracion: '~90 min',
-    chequeo: 'Primera serie de calentamiento lenta o pesada anormal? Baja 10-15% las cargas hoy. No busques récords.',
+    nombre: 'Gym A — Empuje superior', subtitulo: 'Pecho · hombro · tríceps', color: '#22c55e', duracion: '~90 min',
+    chequeo: 'Prioridad: empuje horizontal (tu punto débil). Primera serie de calentamiento anormalmente pesada? Baja 10-15% y no busques récords. Graba tu banca de lado para revisar técnica.',
     ejercicios: [
-      { id: 'gymA-1', nombre: 'Sentadilla (Back Squat)', series: 4, reps: '5', rir: '2', descanso: '3 min', nota: 'Patrón principal. Calienta progresivo.' },
-      { id: 'gymA-2', nombre: 'Peso Muerto', series: 3, reps: '4', rir: '2', descanso: '3 min', nota: 'Alterna con front squat.' },
-      { id: 'gymA-3', nombre: 'Dominadas LASTRADAS', series: 4, reps: '4-6', rir: '1-2', descanso: '2.5 min', nota: 'Con mochila. El ejercicio estrella.', lastre: true },
-      { id: 'gymA-4', nombre: 'Búlgaras', series: 3, reps: '8/pierna', rir: '2', descanso: '90s', nota: 'Unilateral.' },
-      { id: 'gymA-5', nombre: 'Curl femoral', series: 3, reps: '10', rir: '1', descanso: '75s', nota: 'Aísla isquios.' },
-      { id: 'gymA-6', nombre: 'Remo con barra', series: 3, reps: '8', rir: '2', descanso: '90s', nota: 'Tracción horizontal.' },
-      { id: 'gymA-7', nombre: 'Gemelo de pie', series: 3, reps: '12', rir: '1', descanso: '60s', nota: 'Pausa abajo.' },
-      { id: 'gymA-8', nombre: 'Dead hang (agarre)', series: 3, reps: '30-45s', rir: '1', descanso: '60s', nota: 'Grip + descompresión.' },
+      { id: 'gymA-1', nombre: 'Press banca con barra', series: 4, reps: '5-8', rir: '2', descanso: '3 min', nota: 'Tu ejercicio prioritario. Excéntrica 3s, sin rebote, escápulas retraídas. Alt: press mancuernas.' },
+      { id: 'gymA-2', nombre: 'Press inclinado mancuernas 30°', series: 3, reps: '8-12', rir: '1-2', descanso: '2.5 min', nota: 'Pectoral superior. 30° no más (si subes, trabaja hombro). Alt: press inclinado máquina.' },
+      { id: 'gymA-3', nombre: 'Press militar sentado mancuernas', series: 3, reps: '8-12', rir: '1-2', descanso: '2 min', nota: 'Solo 3 series: tu militar ya es fuerte. Mantenimiento de deltoides anterior.' },
+      { id: 'gymA-4', nombre: 'Aperturas en polea (pec en longitud larga)', series: 3, reps: '12-15', rir: '0-1', descanso: '90s', nota: 'Pectoral en estiramiento profundo. Alt: aperturas mancuernas en banco plano.' },
+      { id: 'gymA-5', nombre: 'Extensión tríceps overhead (polea)', series: 3, reps: '10-15', rir: '1', descanso: '90s', nota: 'Overhead = cabeza larga en longitud larga (Maeo 2021). Alt: extensión con mancuerna.' },
+      { id: 'gymA-6', nombre: 'Elevación lateral (polea/mancuerna)', series: 3, reps: '12-20', rir: '0-1', descanso: '60s', nota: 'Deltoides medio, tu déficit. Alt: lateral en máquina.' },
     ]
   },
   gymB: {
-    nombre: 'Gym Pesado B', subtitulo: 'Empuje + tracción', color: '#22c55e', duracion: '~90 min',
-    chequeo: 'Primera serie de calentamiento lenta o pesada anormal? Baja 10-15% las cargas hoy. No busques récords.',
+    nombre: 'Gym B — Tracción superior', subtitulo: 'Espalda · bíceps', color: '#16a34a', duracion: '~90 min',
+    chequeo: 'Prioridad: tracción vertical (tu punto débil). OJO: mide progreso de dominadas en CARGA (jalón/lastre), no en reps — vas a subir 10kg de peso corporal y las reps bajarán aunque progreses.',
     ejercicios: [
-      { id: 'gymB-1', nombre: 'Press Banca', series: 4, reps: '5', rir: '2', descanso: '3 min', nota: 'Empuje horizontal.' },
-      { id: 'gymB-2', nombre: 'Press Militar de pie', series: 3, reps: '6', rir: '2', descanso: '2.5 min', nota: 'Empuje vertical + core.' },
-      { id: 'gymB-3', nombre: 'Fondos LASTRADOS', series: 4, reps: '6-8', rir: '1-2', descanso: '2.5 min', nota: 'Con mochila. Cuida profundidad del hombro.', lastre: true },
-      { id: 'gymB-4', nombre: 'Jalón al pecho', series: 3, reps: '8-10', rir: '1-2', descanso: '90s', nota: 'Tracción vertical.' },
-      { id: 'gymB-5', nombre: 'Press inclinado mancuernas', series: 3, reps: '10', rir: '2', descanso: '90s', nota: 'Pectoral clavicular.' },
-      { id: 'gymB-6', nombre: 'Face pulls', series: 3, reps: '15', rir: '0-1', descanso: '60s', nota: 'Salud de hombro.' },
-      { id: 'gymB-7', nombre: 'Curl + Extensión (superserie)', series: 3, reps: '10-12', rir: '1', descanso: '60s', nota: 'Brazos.' },
-      { id: 'gymB-8', nombre: 'Rueda abdominal', series: 3, reps: '8-10', rir: '1', descanso: '60s', nota: 'Core anti-extensión.' },
+      { id: 'gymB-1', nombre: 'Dominadas (asistidas o lastradas)', series: 4, reps: '4-6', rir: '1', descanso: '3 min', nota: 'Con 5RM: haz 4x3-4 con RIR 1-2, NO al fallo. Alterna agarre pronado/neutro. Alt: jalón pesado.', lastre: true },
+      { id: 'gymB-2', nombre: 'Jalón al pecho', series: 3, reps: '8-12', rir: '1-2', descanso: '2 min', nota: 'Tu vehículo de PROGRESIÓN de carga (la dominada no permite subir de a poco). Escápulas arriba, luego tira.' },
+      { id: 'gymB-3', nombre: 'Remo con apoyo en pecho', series: 4, reps: '8-12', rir: '1-2', descanso: '2.5 min', nota: 'Con apoyo: quita carga lumbar (ya la tienes en RDL). Mayor retorno por serie. Alt: remo mancuerna.' },
+      { id: 'gymB-4', nombre: 'Pullover en polea alta (brazo recto)', series: 2, reps: '12-15', rir: '0-1', descanso: '90s', nota: 'Dorsal sin que el bíceps limite. Solo 2 series, complemento.' },
+      { id: 'gymB-5', nombre: 'Face pull o pájaro', series: 3, reps: '15-20', rir: '0-1', descanso: '75s', nota: 'Deltoides posterior + rotadores. Contrapeso a tanto empuje. Innegociable.' },
+      { id: 'gymB-6', nombre: 'Curl inclinado mancuernas 45-60°', series: 3, reps: '8-12', rir: '1', descanso: '90s', nota: 'Inclinado = cabeza larga del bíceps en longitud larga. Alt: curl de pie.' },
+      { id: 'gymB-7', nombre: 'Curl martillo', series: 2, reps: '10-15', rir: '0-1', descanso: '75s', nota: 'Braquial y braquiorradial (grosor del brazo). Agarre neutro, amable con el codo.' },
+    ]
+  },
+  gymC: {
+    nombre: 'Gym C — Pierna completa', subtitulo: 'Cuádriceps · isquios · glúteo · gemelo', color: '#15803d', duracion: '~90 min',
+    chequeo: 'Esta sesión está en TODAS las semanas (3 y 2), carga toda tu pierna. Tu sentadilla está proporcionalmente baja — hay margen. Pon la natación este día (no running) para no interferir.',
+    ejercicios: [
+      { id: 'gymC-1', nombre: 'Sentadilla trasera con barra', series: 4, reps: '5-8', rir: '2', descanso: '3 min', nota: 'Profundidad mínima paralelo. RIR 2 (no al fallo, coste sistémico alto). Alt: hack squat.' },
+      { id: 'gymC-2', nombre: 'Peso muerto rumano (RDL)', series: 3, reps: '6-10', rir: '2', descanso: '2.5 min', nota: 'Isquio en longitud larga. Cadera atrás, tibias verticales, barra pegada. Alt: RDL mancuernas.' },
+      { id: 'gymC-3', nombre: 'Prensa 45° o búlgara', series: 3, reps: '10-15', rir: '1', descanso: '2 min', nota: 'Cuádriceps sin carga axial. Prensa en semanas de guardia, búlgara en semanas buenas.' },
+      { id: 'gymC-4', nombre: 'Curl femoral SENTADO', series: 3, reps: '8-12', rir: '1', descanso: '90s', nota: 'Sentado > tumbado (Maeo 2021, evidencia directa). Complementa el RDL. Alt: tumbado si no hay.' },
+      { id: 'gymC-5', nombre: 'Extensión de cuádriceps', series: 2, reps: '12-20', rir: '0-1', descanso: '90s', nota: 'Único que trabaja recto femoral con cadera extendida. Solo 2 series al final.' },
+      { id: 'gymC-6', nombre: 'Gemelo de pie (rodilla extendida)', series: 3, reps: '8-12', rir: '0-1', descanso: '90s', nota: 'Pausa 2s abajo (Kassiano 2023). Gastrocnemio. Alt: gemelo en prensa.' },
+      { id: 'gymC-7', nombre: 'Gemelo sentado (sóleo)', series: 2, reps: '12-20', rir: '0-1', descanso: '60s', nota: 'Rodilla flexionada = sóleo. Músculo distinto, fibra lenta, reps altas.' },
+    ]
+  },
+  gymD: {
+    nombre: 'Gym D — Tren superior completo', subtitulo: 'Todo el torso · superseries', color: '#4ade80', duracion: '~90 min',
+    chequeo: 'Sesión densa con SUPERSERIES (empuje+tracción emparejados): haces el ejercicio "a", descansas 90s, el "b", descansas 90s, y repites. Ahorra tiempo sin perder rendimiento. Tus 2 puntos débiles van primero y en fresco.',
+    ejercicios: [
+      { id: 'gymD-1', nombre: 'S1a) Press banca con barra', series: 4, reps: '5-8', rir: '2', descanso: '90s→S1b', nota: 'SUPERSERIE con dominadas. Tu punto débil #1, primero y fresco.' },
+      { id: 'gymD-2', nombre: 'S1b) Dominadas o jalón pesado', series: 4, reps: '6-10', rir: '1', descanso: '90s→S1a', nota: 'SUPERSERIE con banca. Tu punto débil #2. No comparten músculo.', lastre: true },
+      { id: 'gymD-3', nombre: 'S2a) Press inclinado mancuernas', series: 3, reps: '8-12', rir: '1-2', descanso: '90s→S2b', nota: 'SUPERSERIE con remo. Pectoral superior.' },
+      { id: 'gymD-4', nombre: 'S2b) Remo con apoyo en pecho', series: 3, reps: '8-12', rir: '1-2', descanso: '90s→S2a', nota: 'SUPERSERIE con press inclinado. Espalda media.' },
+      { id: 'gymD-5', nombre: 'S3a) Elevación lateral', series: 3, reps: '12-20', rir: '0-1', descanso: '60s→S3b', nota: 'SUPERSERIE con face pull. Deltoides medio.' },
+      { id: 'gymD-6', nombre: 'S3b) Face pull o pájaro', series: 2, reps: '15-20', rir: '0-1', descanso: '60s→S3a', nota: 'SUPERSERIE con lateral. Deltoides posterior.' },
+      { id: 'gymD-7', nombre: 'S4a) Curl inclinado mancuernas', series: 3, reps: '8-12', rir: '1', descanso: '60s→S4b', nota: 'SUPERSERIE con tríceps. Bíceps en longitud larga.' },
+      { id: 'gymD-8', nombre: 'S4b) Extensión tríceps overhead', series: 3, reps: '10-15', rir: '1', descanso: '60s→S4a', nota: 'SUPERSERIE con curl. Tríceps cabeza larga.' },
     ]
   },
   calistenia: {
@@ -104,6 +130,9 @@ export const SESIONES = {
       { id: 'cal-6', nombre: 'Zancadas (lunges)', series: 3, reps: '10/pierna', rir: '2', descanso: '60s', nota: 'Base para el pistol squat. Control en la bajada.' },
       { id: 'cal-7', nombre: 'Remo con banda tubo', series: 3, reps: '12-15', rir: '1', descanso: '60s', nota: 'Banda tubo anclada. Tracción horizontal, equilibra las dominadas.' },
       { id: 'cal-8', nombre: 'Plancha (core)', series: 3, reps: '30-45s', rir: '1', descanso: '45s', nota: 'Cuerpo recto, glúteo y abdomen apretados. Base para L-sit y front lever.' },
+      { id: 'cal-9', nombre: 'RELLENO: Elevación lateral con banda', series: 2, reps: '15-25', rir: '0-1', descanso: '45s', nota: 'Corrige tu déficit de deltoides medio. Banda tubo bajo los pies. 4 min bien invertidos.' },
+      { id: 'cal-10', nombre: 'RELLENO: Face pull con banda', series: 2, reps: '15-20', rir: '0-1', descanso: '45s', nota: 'Corrige deltoides posterior. Banda anclada a la altura de la cara.' },
+      { id: 'cal-11', nombre: 'RELLENO: Gemelo a una pierna en escalón', series: 2, reps: '15-20', rir: '0-1', descanso: '45s', nota: 'Corrige déficit de gemelo. En un escalón, ROM completo con pausa abajo.' },
     ]
   },
   natacion: {
