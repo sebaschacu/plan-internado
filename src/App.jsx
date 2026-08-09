@@ -430,10 +430,10 @@ const CalendarView = ({ calendario, progress, onOpenDay, onEditDay, editMode, se
                 }`}
                 style={{ borderTopColor: turno.color, borderTopWidth: '3px' }}>
 
-                {/* Número del día */}
+                {/* Número del día + turno */}
                 <div className="flex items-start justify-between leading-none">
                   <span className="text-sm sm:text-base font-bold" style={{ fontFamily: 'ui-monospace, monospace', color: isToday ? '#e2e8f0' : '#cbd5e1' }}>
-                    {d.dia}
+                    {d.dia}<span className="text-[10px] font-bold" style={{ color: turno.color }}> · {d.turno}</span>
                   </span>
                   {/* Indicador de estado (esquina) */}
                   {!editMode && comp === 'full' && <CheckCircle2 size={12} className="text-emerald-400 flex-shrink-0" />}
