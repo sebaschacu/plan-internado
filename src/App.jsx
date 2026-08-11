@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import {
   Dumbbell, Home, Waves, Moon, Calendar, Check, CheckCircle2,
   Timer, Trophy, RotateCcw, ChevronLeft, ChevronRight, X, Backpack,
-  Settings, ArrowLeft, Zap, Activity, Circle, Star, AlertTriangle, Flame, TrendingUp
+  Settings, ArrowLeft, Zap, Activity, Circle, Star, AlertTriangle, Flame, TrendingUp, Link2
 } from 'lucide-react';
 import { TURNO_INFO, SESION_INFO, SESIONES, CALENDARIO_DEFAULT, MES_INFO, DIAS_SEMANA } from './data.js';
 
@@ -109,6 +109,16 @@ const ExerciseCard = ({ ex, prog, pr, onToggleSet, onLog, onLastre, onBanda, col
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap mb-1">
+              {ex.bs && (
+                <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded flex items-center gap-1 border"
+                  style={{
+                    background: ex.bstipo === 'ant' ? '#7c2d1233' : '#5b21b633',
+                    borderColor: ex.bstipo === 'ant' ? '#c2410c88' : '#7c3aed88',
+                    color: ex.bstipo === 'ant' ? '#fdba74' : '#c4b5fd'
+                  }}>
+                  <Link2 size={9} strokeWidth={3} />{ex.bs} · {ex.bstipo === 'ant' ? 'antag.' : 'no comp.'}
+                </span>
+              )}
               {allDone && <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-emerald-900/40 text-emerald-300 border border-emerald-700/50 flex items-center gap-1"><Check size={9} strokeWidth={3} />Hecho</span>}
               {ex.lastre && pr?.kg != null && (
                 <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded border flex items-center gap-1 ${isPR ? 'bg-amber-500/30 border-amber-400 text-amber-200 animate-pulse' : 'bg-amber-950/40 border-amber-700/50 text-amber-300'}`}>
@@ -495,7 +505,7 @@ const CalendarView = ({ calendario, progress, onOpenDay, onEditDay, editMode, se
 
                 {/* Etiqueta de sesión (abajo) */}
                 <div className="text-[7px] sm:text-[8px] font-bold uppercase tracking-tight text-center leading-none truncate" style={{ color: ses.color }}>
-                  {ses.label.split(' ')[0]}
+                  {ses.label}
                 </div>
 
                 {/* Marcadores de esquina: hoy y festivo */}
