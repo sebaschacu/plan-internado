@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import {
   Dumbbell, Home, Waves, Moon, Calendar, Check, CheckCircle2,
   Timer, Trophy, RotateCcw, ChevronLeft, ChevronRight, X, Backpack,
-  Settings, ArrowLeft, Zap, Activity, Circle, Star, AlertTriangle, Flame, TrendingUp, Link2
+  Settings, ArrowLeft, Zap, Activity, Circle, Star, AlertTriangle, Flame, TrendingUp, Link2, Sparkles, Ruler, Clock
 } from 'lucide-react';
 import { TURNO_INFO, SESION_INFO, SESIONES, CALENDARIO_DEFAULT, MES_INFO, DIAS_SEMANA } from './data.js';
 
@@ -109,6 +109,16 @@ const ExerciseCard = ({ ex, prog, pr, onToggleSet, onLog, onLastre, onBanda, col
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap mb-1">
+              {ex.nuevo && (
+                <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded flex items-center gap-1 border bg-green-500/20 border-green-400/60 text-green-300">
+                  <Sparkles size={9} strokeWidth={3} />Nuevo v5
+                </span>
+              )}
+              {ex.opcional && (
+                <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded flex items-center gap-1 border bg-slate-600/20 border-slate-500/60 text-slate-300">
+                  Opcional
+                </span>
+              )}
               {ex.bs && (
                 <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded flex items-center gap-1 border"
                   style={{
@@ -120,7 +130,7 @@ const ExerciseCard = ({ ex, prog, pr, onToggleSet, onLog, onLastre, onBanda, col
                 </span>
               )}
               {allDone && <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-emerald-900/40 text-emerald-300 border border-emerald-700/50 flex items-center gap-1"><Check size={9} strokeWidth={3} />Hecho</span>}
-              {ex.lastre && pr?.kg != null && (
+              {(ex.lastre || ex.acarreo) && pr?.kg != null && (
                 <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded border flex items-center gap-1 ${isPR ? 'bg-amber-500/30 border-amber-400 text-amber-200 animate-pulse' : 'bg-amber-950/40 border-amber-700/50 text-amber-300'}`}>
                   <Trophy size={9} strokeWidth={3} />PR {pr.kg}kg
                 </span>
@@ -140,16 +150,6 @@ const ExerciseCard = ({ ex, prog, pr, onToggleSet, onLog, onLastre, onBanda, col
           ))}
         </div>
 
-        {/* Lastre (mochila) */}
-        {ex.lastre && (
-          <div className="flex items-center gap-2 mb-2 px-2 py-1.5 rounded bg-amber-950/20 border border-amber-900/40">
-            <Backpack size={14} className="text-amber-400 flex-shrink-0" />
-            <span className="text-[10px] uppercase tracking-wide text-amber-300/80 font-semibold">Lastre mochila</span>
-            <NumInput value={p.lastre} onChange={(v) => onLastre(ex.id, v === '' ? null : parseFloat(v))} placeholder="kg" w="w-14" />
-            <span className="text-[10px] text-slate-500">kg</span>
-          </div>
-        )}
-
         {/* Banda de asistencia */}
         {ex.banda && (
           <div className="flex items-center gap-2 mb-2 px-2 py-1.5 rounded bg-purple-950/20 border border-purple-900/40">
@@ -162,6 +162,42 @@ const ExerciseCard = ({ ex, prog, pr, onToggleSet, onLog, onLastre, onBanda, col
               placeholder="color/nivel"
               className="flex-1 min-w-0 h-8 px-2 bg-[#0f1417] border border-[#3a2a50] focus:border-purple-500/60 focus:outline-none text-slate-100 text-xs rounded"
             />
+          </div>
+        )}
+
+        {/* Acarreo (distancia + carga) */}
+        {ex.acarreo && (
+          <div className="flex items-center gap-2 mb-2 px-2 py-1.5 rounded bg-cyan-950/20 border border-cyan-900/40 flex-wrap">
+            <Ruler size={14} className="text-cyan-400 flex-shrink-0" />
+            <span className="text-[10px] uppercase tracking-wide text-cyan-300/80 font-semibold">Acarreo</span>
+            <input type="text" inputMode="numeric" value={p.banda ?? ''}
+              onChange={(e) => onBanda(ex.id, e.target.value.replace(/[^0-9.]/g, ''))}
+              placeholder="m" className="w-12 h-8 px-1 bg-[#0f1417] border border-cyan-900/50 focus:border-cyan-500/60 focus:outline-none text-slate-100 text-xs text-center rounded" />
+            <span className="text-[10px] text-slate-500">m</span>
+            <NumInput value={p.lastre} onChange={(v) => onLastre(ex.id, v === '' ? null : parseFloat(v))} placeholder="kg" w="w-12" />
+            <span className="text-[10px] text-slate-500">kg</span>
+            <span className="text-[9px] text-cyan-500/70 w-full">Sube primero distancia (30→40→50m), luego carga</span>
+          </div>
+        )}
+
+        {/* Isométrico (segundos) - métrica clave */}
+        {ex.iso && (
+          <div className="flex items-center gap-2 mb-2 px-2 py-1.5 rounded bg-rose-950/20 border border-rose-900/40 flex-wrap">
+            <Clock size={14} className="text-rose-400 flex-shrink-0" />
+            <span className="text-[10px] uppercase tracking-wide text-rose-300/80 font-semibold">Isométrico</span>
+            <NumInput value={p.segundos} onChange={(v) => onLastre(ex.id, v === '' ? null : parseFloat(v))} placeholder="seg" w="w-14" />
+            <span className="text-[10px] text-slate-500">seg</span>
+            <span className="text-[9px] text-rose-500/70 w-full">Métrica clave del objetivo. Solo tiempo hasta 60s, luego carga</span>
+          </div>
+        )}
+
+        {/* Lastre (mochila) */}
+        {ex.lastre && (
+          <div className="flex items-center gap-2 mb-2 px-2 py-1.5 rounded bg-amber-950/20 border border-amber-900/40">
+            <Backpack size={14} className="text-amber-400 flex-shrink-0" />
+            <span className="text-[10px] uppercase tracking-wide text-amber-300/80 font-semibold">Lastre</span>
+            <NumInput value={p.lastre} onChange={(v) => onLastre(ex.id, v === '' ? null : parseFloat(v))} placeholder="kg" w="w-14" />
+            <span className="text-[10px] text-slate-500">kg</span>
           </div>
         )}
 
@@ -266,6 +302,16 @@ const SessionView = ({ diaData, sesionKey, progress, prMap, onBack, onToggleSet,
         <div className="mb-4 px-3 py-2.5 rounded-lg border-l-4 bg-[#151b21]" style={{ borderColor: color }}>
           <p className="text-[12px] text-slate-300 leading-relaxed">{ses.chequeo}</p>
         </div>
+
+        {/* Aviso: sesión con acarreos antes de guardia / seguridad */}
+        {ses.ejercicios.some(e => e.acarreo) && (
+          <div className="mb-4 px-3 py-2 rounded-lg border-l-4 border-cyan-600 bg-cyan-950/20 flex items-start gap-2">
+            <AlertTriangle size={14} className="text-cyan-400 flex-shrink-0 mt-0.5" />
+            <p className="text-[11px] text-cyan-200/90 leading-relaxed">
+              Esta sesión tiene acarreos. Si mañana tienes guardia, recorta a 2 series (es autorregulación). Si el agarre te limitó un remo o jalón, baja carga, no distancia.
+            </p>
+          </div>
+        )}
 
         {total === 0 ? (
           <div className="text-center py-16">
